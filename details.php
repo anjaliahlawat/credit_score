@@ -13,12 +13,12 @@ session_start();
 </head>
 <body>
 <?php
-  $fullname=$_SESSION["fullname"];
-  $mob =$_SESSION["mob"];
-   $sql = "SELECT c_id, name, mobile, email, org_name FROM credit_score_system WHERE name='$fullname', mobile='$mob'";
-   $result = mysqli_query($conn, $sql);
-?>
+  $id=$_SESSION["id"];
 
+   $sql = "SELECT c_id, assets, annual_income, debts FROM credit_table WHERE c_id='$id'";
+   $result = mysqli_query($conn, $sql);
+   $row = mysqli_fetch_assoc($result);
+?>
 <div class="container mt-5">
     <div class="row row-header">
         <div class="col-12 col-sm-5 offset-sm-2 bg-info">
@@ -30,15 +30,15 @@ session_start();
             <form action="backend_logic.php" method="post">
                 <div class="form-group">
                     <label for="assets">Assets:</label>
-                    <input type="text" class="form-control" id="assets" name="assets" value="<?php ?>">
+                    <input type="text" class="form-control" id="assets" name="assets" value="<?php echo $row['assets']?>">
                 </div>
                 <div class="form-group">
                     <label for="an_income">Annual Come:</label>
-                    <input type="text" class="form-control" id="an_income" name="an_income" placeholder="Enter Annual Income">
+                    <input type="text" class="form-control" id="an_income" name="an_income" value="<?php echo $row['annual_income']?>">
                 </div>
                 <div class="form-group">
                     <label for="debts">Debts:</label>
-                    <input type="text" class="form-control" id="debts" name="debts" placeholder="Enter Debts if any">
+                    <input type="text" class="form-control" id="debts" name="debts" value="<?php echo $row['debts']?>">
                 </div>
                 <button type="submit" class="btn btn-primary" name="sub_btn2">Submit</button>
             </form>
